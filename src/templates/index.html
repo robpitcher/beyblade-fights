@@ -24,6 +24,38 @@
             </div>
             <button type="submit" class="btn btn-primary">Log Result</button>
         </form>
+        <div id="resultMessage" class="mt-3"></div>
     </div>
+
+    <script>
+        document.getElementById('logResultForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const fighter1 = document.getElementById('fighter1').value;
+            const fighter2 = document.getElementById('fighter2').value;
+            const winner = document.getElementById('winner').value;
+
+            fetch('/results', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    fighter1: fighter1,
+                    fighter2: fighter2,
+                    winner: winner
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('resultMessage').innerText = `Result logged: ${data.winner} wins!`;
+                document.getElementById('logResultForm').reset();
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                document.getElementById('resultMessage').innerText = 'An error occurred while logging the result.';
+            });
+        });
+    </script>
 </body>
 </html>
