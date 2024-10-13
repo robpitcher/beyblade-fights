@@ -28,5 +28,9 @@ def log_result():
     results.append(result)
     return jsonify(result), 201
 
+@app.route('/results-page')
+def results_page():
+    return render_template('results.html')
+
 if __name__ == '__main__':
     app.run(debug=True)
