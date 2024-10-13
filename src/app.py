@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request, render_template
+from datetime import datetime, timezone
 
 app = Flask(__name__)
 
@@ -19,11 +20,18 @@ def log_result():
     if 'fighter1' not in data or 'fighter2' not in data or 'winner' not in data:
         return jsonify({'error': 'Invalid data'}), 400
 
+    now = datetime.now(timezone.utc)
+    timestamp_iso = now.isoformat()  # ISO 8601 format
+    date_str = now.strftime('%Y-%m-%d')  # Extract date
+    time_str = now.strftime('%H:%M:%S')  # Extract time
+
     result = {
         'fighter1': data['fighter1'],
         'fighter2': data['fighter2'],
         'winner': data['winner'],
-        'timestamp': data.get('timestamp', 'N/A')
+        'date': date_str,  # Add date
+        'time': time_str,  # Add time
+        'timestamp': timestamp_iso
     }
     results.append(result)
     return jsonify(result), 201
