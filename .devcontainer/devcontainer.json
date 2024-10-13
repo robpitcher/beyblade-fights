@@ -1,0 +1,19 @@
+{
+    "name": "Flask Dev Container",
+    "dockerFile": "Dockerfile",
+    "context": "..",
+    "appPort": [5000],
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "terminal.integrated.defaultProfile.linux": "bash"
+            },
+            "extensions": [
+                "ms-python.python",
+                "ms-azuretools.vscode-docker"
+            ]
+        }
+    },
+    "postCreateCommand": "pip install -r requirements.txt",
+    "remoteUser": "root"
+}
